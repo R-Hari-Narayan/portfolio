@@ -1,0 +1,11 @@
+Model Information:
+* title:	Bicycle | #SketchfabWeeklyChallenge2023
+* source:	https://sketchfab.com/3d-models/bicycle-sketchfabweeklychallenge2023-7df4888624e2481fab5900140c1d238f
+* author:	vmek3d (https://sketchfab.com/vmek3d)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Bicycle | #SketchfabWeeklyChallenge2023" (https://sketchfab.com/3d-models/bicycle-sketchfabweeklychallenge2023-7df4888624e2481fab5900140c1d238f) by vmek3d (https://sketchfab.com/vmek3d) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

@@ -1,15 +1,15 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import * as Three from 'three';
-import { contain } from 'three/src/extras/TextureUtils';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 
 @Component({
   selector: 'app-landing-scene',
   templateUrl: './landing-scene.component.html',
   styleUrls: ['./landing-scene.component.scss'],
 })
-export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
+export class LandingSceneComponent implements AfterViewInit, OnDestroy {
 
-  @ViewChild('rendererContainer', { static: true }) 
+  @ViewChild('rendererContainer', { static: true })
   rendererContainer!: ElementRef<HTMLDivElement>;
 
 
@@ -28,7 +28,7 @@ export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
     const height = container.offsetHeight || window.innerHeight;
 
     this.initThree(width, height)
-    //this.renderer.render(this.scene, this.camera)
+    this.loadModels()
     this.animate()
 
     //observe size changes
@@ -42,13 +42,28 @@ export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
 
     this.resizeObserver.observe(container)
   }
+  setupScene() {
+    throw new Error('Method not implemented.');
+  }
+  loadModels() {
+    const loader = new GLTFLoader();
+    loader.load('assets/models/bicycle/scene.gltf', 
+      (gltf) => {
+        this.scene.add(gltf.scene);
+      }, 
+      undefined, 
+      function (error) {
+        console.error(error);
+      }
+    );
+  }
 
   ngOnDestroy(): void {
-      if (this.resizeObserver) {
-        this.resizeObserver.disconnect();
-      }
-      cancelAnimationFrame(this.animationId);
-      this.renderer.dispose();
+    if (this.resizeObserver) {
+      this.resizeObserver.disconnect();
+    }
+    cancelAnimationFrame(this.animationId);
+    this.renderer.dispose();
   }
 
   private initThree(width: number, height: number) {
@@ -67,14 +82,14 @@ export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
     this.camera.position.z = 5;
 
     //Renderer
-    this.renderer = new Three.WebGLRenderer({antialias: true});
-    this.renderer.setSize(width,height);
+    this.renderer = new Three.WebGLRenderer({ antialias: true });
+    this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x222222);
     this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
 
     // Cube
     const geometry = new Three.BoxGeometry();
-    const material = new Three.MeshBasicMaterial({ color: 0xffffff, wireframe: true});
+    const material = new Three.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
     this.cube = new Three.Mesh(geometry, material);
     this.scene.add(this.cube);
   }

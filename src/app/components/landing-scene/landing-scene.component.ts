@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import * as Three from 'three';
+import { contain } from 'three/src/extras/TextureUtils';
 
 @Component({
   selector: 'app-landing-scene',
@@ -8,26 +9,49 @@ import * as Three from 'three';
 })
 export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
 
-  @ViewChild('rendererContainer', { static: true }) rendererContainer!: ElementRef;
+  @ViewChild('rendererContainer', { static: true }) 
+  rendererContainer!: ElementRef<HTMLDivElement>;
 
 
   private scene!: Three.Scene;
-  private camera!: Three.Camera;
+  private camera!: Three.PerspectiveCamera;
   private renderer!: Three.WebGLRenderer;
   private cube!: Three.Mesh;
   private animationId!: number;
+  private resizeObserver!: ResizeObserver;
 
   ngAfterViewInit() {
-    this.initThree()
+    const container = this.rendererContainer.nativeElement;
+
+    //Get initial size
+    const width = container.offsetWidth || window.innerWidth;
+    const height = container.offsetHeight || window.innerHeight;
+
+    this.initThree(width, height)
     //this.renderer.render(this.scene, this.camera)
     this.animate()
+
+    //observe size changes
+    this.resizeObserver = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const newWidth = entry.contentRect.width
+        const newHeight = entry.contentRect.height
+        this.onResize(newWidth, newHeight);
+      }
+    })
+
+    this.resizeObserver.observe(container)
   }
 
   ngOnDestroy(): void {
-      
+      if (this.resizeObserver) {
+        this.resizeObserver.disconnect();
+      }
+      cancelAnimationFrame(this.animationId);
+      this.renderer.dispose();
   }
 
-  private initThree() {
+  private initThree(width: number, height: number) {
 
     console.log("Initializing threejs")
     //Scene
@@ -36,7 +60,7 @@ export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
     //Camera
     this.camera = new Three.PerspectiveCamera(
       75,
-      this.rendererContainer.nativeElement.clientWidth / this.rendererContainer.nativeElement.clientHeight,
+      width / height,
       0.1,
       1000
     );
@@ -44,15 +68,8 @@ export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
 
     //Renderer
     this.renderer = new Three.WebGLRenderer({antialias: true});
-    console.log(
-      "Container size:",
-      500,
-      500
-    );
-    this.renderer.setSize(
-      500,
-      500
-    );
+    this.renderer.setSize(width,height);
+    this.renderer.setClearColor(0x222222);
     this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
 
     // Cube
@@ -63,7 +80,6 @@ export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
   }
 
   private animate = () => {
-    console.log("Starting animation");
     this.animationId = requestAnimationFrame(this.animate);
 
     this.cube.rotation.x += 0.01;
@@ -71,4 +87,10 @@ export class LandingSceneComponent  implements AfterViewInit, OnDestroy {
 
     this.renderer.render(this.scene, this.camera)
   };
+
+  private onResize(width: number, height: number) {
+    this.camera.aspect = width / height;
+    this.camera.updateProjectionMatrix();
+    this.renderer.setSize(width, height);
+  }
 }

@@ -23,16 +23,22 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
   private resizeObserver!: ResizeObserver;
   private models: Three.Object3D[] = [];
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     const container = this.rendererContainer.nativeElement;
 
-    //Get initial size
+    //Get initial canvas/container size
     const width = container.offsetWidth || window.innerWidth;
     const height = container.offsetHeight || window.innerHeight;
 
     this.initThree(width, height)
-    this.loadModels()
+    // List of models to be loaded
+    const modelNames = ['acoustic_guitar', 'bicycle', 'msi_laptop', 'zoro',
+      'luffy_hat', 'multimeter', 'android', 'android_mascot'
+    ]
+    await this.loadModels(modelNames)
+    this.setUpScene()
     this.setupControl()
+    console.log("Initializing animation")
     this.animate()
 
     //observe size changes
@@ -47,22 +53,10 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
     this.resizeObserver.observe(container)
   }
 
-
-  setupControl() {
-    const controls = new OrbitControls(this.camera, this.rendererContainer.nativeElement);
-    controls.target.set(0,1,0);
-    controls.update();
-  }
-
-
-  loadModels() {
-    // Add a directional light
-    const modelNames = ['acoustic_guitar', 'bicycle', 'msi_laptop', 'zoro',
-      'luffy_hat', 'multimeter', 'android', 'android_mascot'
-    ]
+  async loadModels(modelNames: string[]) {
     const loader = new GLTFLoader();
     modelNames.forEach((modelName, index) => {
-      loader.load('assets/models/'+modelName+'/scene.gltf', 
+      loader.load('assets/models/' + modelName + '/scene.gltf',
         (gltf) => {
           const model = gltf.scene;
 
@@ -76,28 +70,72 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
 
           //Target size (for now 1 unit cube)
           const desiredSize = 1
-          
+
           //Scale factor
           const scale = desiredSize / maxDim;
 
           //Apply scaling
           model.scale.setScalar(scale);
-          
 
           //Change model initial position
-          model.position.setX(index*2)
+          model.position.setX(index * 2);
 
-          this.models.push(model);
+          // --- recompute bounding box after scaling ---
+          box.setFromObject(model);
+          const center = new Three.Vector3();
+          box.getCenter(center);
 
-          this.scene.add(model);
-        }, 
-        undefined, 
+          // --- create bubble (SphereGeometry) ---
+          const sphereRadius = box.getSize(new Three.Vector3()).length() / 2;
+          const bubbleGeometry = new Three.SphereGeometry(sphereRadius * 1.1, 32, 32); // 1.1 = padding
+          const bubbleMaterial = new Three.MeshPhysicalMaterial({
+            color: 0x88ccff,
+            transparent: true,
+            opacity: 0.2,
+            roughness: 0.2,
+            metalness: 0,
+            transmission: 0.9, // glass-like
+            clearcoat: 1.0
+          });
+          const bubble = new Three.Mesh(bubbleGeometry, bubbleMaterial);
+
+          // align bubble to model
+          bubble.position.copy(center);
+
+          // --- group them together ---
+          const group = new Three.Group();
+          group.add(model);
+          group.add(bubble);
+
+          this.models.push(group);
+          this.scene.add(group);
+        },
+        undefined,
         function (error) {
           console.error(error);
         }
       );
-    }); 
+    });
+    console.log("All models loaded")
+    console.log(this.models)
   }
+
+  setUpScene() {
+    console.log("Setting up scene")
+    this.models.forEach((bubble) => {
+      
+    })
+  }
+
+
+  setupControl() {
+    const controls = new OrbitControls(this.camera, this.rendererContainer.nativeElement);
+    controls.target.set(0, 1, 0);
+    controls.update();
+  }
+
+
+  
 
   ngOnDestroy(): void {
     if (this.resizeObserver) {
@@ -139,13 +177,40 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
   }
 
   private animate = () => {
-    this.animationId = requestAnimationFrame(this.animate);
+  this.animationId = requestAnimationFrame(this.animate);
 
-    // this.cube.rotation.x += 0.01;
-    // this.cube.rotation.y += 0.01;
+  const top = 5;     // y at which bubbles reset
+  const bottom = -5; // start y
+  const speedMin = 0.01;
+  const speedMax = 0.03;
 
-    this.renderer.render(this.scene, this.camera)
-  };
+  this.models.forEach((group: any) => {
+    // store speed on the group (once)
+    if (!group.userData.speed) {
+      group.userData.speed = speedMin + Math.random() * (speedMax - speedMin);
+    }
+
+    // move upward
+    group.position.y += group.userData.speed;
+
+    // rotate
+    
+    group.rotation.x += 0.01;
+    //group.rotation.z += 0.01;
+    
+
+    // reset if above top
+    if (group.position.y > top) {
+      group.position.y = bottom;
+      group.position.x = (Math.random() - 0.5) * 10; // random X in [-5,5]
+      group.position.z = (Math.random() - 0.5) * 5; // random Z in [-5,5]
+      group.userData.speed = speedMin + Math.random() * (speedMax - speedMin);
+    }
+  });
+
+  this.renderer.render(this.scene, this.camera);
+};
+
 
   private onResize(width: number, height: number) {
     this.camera.aspect = width / height;

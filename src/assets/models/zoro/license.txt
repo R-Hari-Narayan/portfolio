@@ -1,0 +1,11 @@
+Model Information:
+* title:	Zoro vs kuma pose shadeless
+* source:	https://sketchfab.com/3d-models/zoro-vs-kuma-pose-shadeless-b58254e34c3d4dd68effce7b2ce11c1c
+* author:	g0rra (https://sketchfab.com/g0rra)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Zoro vs kuma pose shadeless" (https://sketchfab.com/3d-models/zoro-vs-kuma-pose-shadeless-b58254e34c3d4dd68effce7b2ce11c1c) by g0rra (https://sketchfab.com/g0rra) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

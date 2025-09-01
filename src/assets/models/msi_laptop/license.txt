@@ -1,0 +1,11 @@
+Model Information:
+* title:	MSI GF63 Gaming Laptop
+* source:	https://sketchfab.com/3d-models/msi-gf63-gaming-laptop-338931b7098741ef9a4ee4b0fd8bd705
+* author:	Pradeep.Kumar2 (https://sketchfab.com/Pradeep.Kumar2)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "MSI GF63 Gaming Laptop" (https://sketchfab.com/3d-models/msi-gf63-gaming-laptop-338931b7098741ef9a4ee4b0fd8bd705) by Pradeep.Kumar2 (https://sketchfab.com/Pradeep.Kumar2) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

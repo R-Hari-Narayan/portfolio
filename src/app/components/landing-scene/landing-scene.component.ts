@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
 import * as Three from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 
@@ -19,9 +19,9 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
   private scene!: Three.Scene;
   private camera!: Three.PerspectiveCamera;
   private renderer!: Three.WebGLRenderer;
-  private cube!: Three.Mesh;
   private animationId!: number;
   private resizeObserver!: ResizeObserver;
+  private models: Three.Object3D[] = [];
 
   ngAfterViewInit() {
     const container = this.rendererContainer.nativeElement;
@@ -57,24 +57,46 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
 
   loadModels() {
     // Add a directional light
-    const models = []
-    // const dirLight = new Three.DirectionalLight(0xffffff, 5);
-    // dirLight.position.set(5, 10, 7.5);
-    // this.scene.add(dirLight);
-
-    // // Add ambient light (soft overall light)
-    // const ambientLight = new Three.AmbientLight(0xffffff, 0.5);
-    // this.scene.add(ambientLight);
+    const modelNames = ['acoustic_guitar', 'bicycle', 'msi_laptop', 'zoro',
+      'luffy_hat', 'multimeter', 'android', 'android_mascot'
+    ]
     const loader = new GLTFLoader();
-    loader.load('assets/models/bicycle/scene.gltf', 
-      (gltf) => {
-        this.scene.add(gltf.scene);
-      }, 
-      undefined, 
-      function (error) {
-        console.error(error);
-      }
-    );
+    modelNames.forEach((modelName, index) => {
+      loader.load('assets/models/'+modelName+'/scene.gltf', 
+        (gltf) => {
+          const model = gltf.scene;
+
+          //Compute bounding box
+          const box = new Three.Box3().setFromObject(model);
+          const size = new Three.Vector3();
+          box.getSize(size);
+
+          //Find largest dimention
+          const maxDim = Math.max(size.x, size.y, size.z);
+
+          //Target size (for now 1 unit cube)
+          const desiredSize = 1
+          
+          //Scale factor
+          const scale = desiredSize / maxDim;
+
+          //Apply scaling
+          model.scale.setScalar(scale);
+          
+
+          //Change model initial position
+          model.position.setX(index*2)
+
+          this.models.push(model);
+
+          this.scene.add(model);
+        }, 
+        undefined, 
+        function (error) {
+          console.error(error);
+        }
+      );
+    }); 
   }
 
   ngOnDestroy(): void {
@@ -93,7 +115,7 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
 
     // Load HDR environment
     const rgbeLoader = new RGBELoader();
-    rgbeLoader.load('assets/hdr/indoor.hdr', (texture) => {
+    rgbeLoader.load('assets/hdr/indoor2.hdr', (texture) => {
       texture.mapping = Three.EquirectangularReflectionMapping;
 
       this.scene.background = new Three.Color(0x87CEEB);
@@ -114,12 +136,6 @@ export class LandingSceneComponent implements AfterViewInit, OnDestroy {
     this.renderer.setSize(width, height);
     this.renderer.setClearColor(0x222222);
     this.rendererContainer.nativeElement.appendChild(this.renderer.domElement);
-
-    // Cube
-    const geometry = new Three.BoxGeometry();
-    const material = new Three.MeshBasicMaterial({ color: 0xffffff, wireframe: true });
-    this.cube = new Three.Mesh(geometry, material);
-    //this.scene.add(this.cube);
   }
 
   private animate = () => {

@@ -1,0 +1,301 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 1086,
+      "max": [
+        45.36294937133789,
+        -60.081016540527344,
+        37.79277420043945
+      ],
+      "min": [
+        -45.36294937133789,
+        -70.98428344726563,
+        23.33704376220703
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 13032,
+      "componentType": 5126,
+      "count": 1086,
+      "max": [
+        0.9968603253364563,
+        0.6259472370147705,
+        0.999061644077301
+      ],
+      "min": [
+        -0.996862530708313,
+        -0.9999205470085144,
+        -0.9057567119598389
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 1086,
+      "max": [
+        0.5609429478645325,
+        0.7988464832305908
+      ],
+      "min": [
+        0.4325025975704193,
+        0.67106693983078
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 5568,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 26064,
+      "componentType": 5126,
+      "count": 2999,
+      "max": [
+        83.90960693359375,
+        84.26232147216797,
+        100.38764190673828
+      ],
+      "min": [
+        -83.90960693359375,
+        -84.26232147216797,
+        0.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 62052,
+      "componentType": 5126,
+      "count": 2999,
+      "max": [
+        0.996483325958252,
+        0.9964833855628967,
+        1.0
+      ],
+      "min": [
+        -0.996483325958252,
+        -0.9990364909172058,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 8688,
+      "componentType": 5126,
+      "count": 2999,
+      "max": [
+        1.0,
+        0.9670531749725342
+      ],
+      "min": [
+        -1.5249359108793215e-08,
+        -2.689674261091568e-08
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 22272,
+      "componentType": 5125,
+      "count": 15024,
+      "type": "SCALAR"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "iSteven (https://sketchfab.com/OneSteven)",
+      "license": "CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)",
+      "source": "https://sketchfab.com/3d-models/android-mascot-3d64eb08308748178d9eb029cb48fc97",
+      "title": "Android Mascot"
+    },
+    "generator": "Sketchfab-15.50.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 82368,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 32680,
+      "byteOffset": 82368,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 98040,
+      "byteOffset": 115048,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 213088,
+      "uri": "scene.bin"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "black",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.0,
+          0.0,
+          0.0,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.0
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "green",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.06172100000000002,
+          0.617207,
+          0.214368,
+          1.0
+        ],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 0.4956175104533652
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Android_black_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TEXCOORD_0": 2
+          },
+          "indices": 3,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "Android.001_green_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 5,
+            "POSITION": 4,
+            "TEXCOORD_0": 6
+          },
+          "indices": 7,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        -2.8327693431939995e-16,
+        2.8327693431939985e-16,
+        0.0,
+        -2.832769343193999e-16,
+        -2.2204460492503126e-16,
+        1.0,
+        0.0,
+        -2.832769343193999e-16,
+        -1.0,
+        -2.2204460492503136e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        -0.009999999776482582,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "4b906f26f52e4b32aa755cb5f8c648a9.fbx"
+    },
+    {
+      "children": [
+        3,
+        5
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "Android"
+    },
+    {
+      "mesh": 0,
+      "name": "Android_black_0"
+    },
+    {
+      "children": [
+        6
+      ],
+      "name": "Android.001"
+    },
+    {
+      "mesh": 1,
+      "name": "Android.001_green_0"
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ]
+}

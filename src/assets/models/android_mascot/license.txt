@@ -1,0 +1,11 @@
+Model Information:
+* title:	Android Mascot
+* source:	https://sketchfab.com/3d-models/android-mascot-3d64eb08308748178d9eb029cb48fc97
+* author:	iSteven (https://sketchfab.com/OneSteven)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Android Mascot" (https://sketchfab.com/3d-models/android-mascot-3d64eb08308748178d9eb029cb48fc97) by iSteven (https://sketchfab.com/OneSteven) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
